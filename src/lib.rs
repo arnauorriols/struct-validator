@@ -194,7 +194,7 @@ macro_rules! deserialize_struct {
 						V: serde::de::MapAccess<'de>,
 					{
 						$(let mut $field_name = None;)*
-						let mut errors = $crate::struct_deserialize::StructValidator::new();
+						let mut errors = $crate::StructValidator::new();
 						while let Some(key) = map.next_key()? {
 							match key {
 								$(Field::$field_name => {
