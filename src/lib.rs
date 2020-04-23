@@ -7,6 +7,8 @@ use std::iter::FromIterator;
 use derive_more::{From, IntoIterator, Display, Error};
 use serde::{Deserialize, Serialize};
 
+pub use paste;
+
 #[derive(Clone, Display, Error, Debug, Default, IntoIterator, From, Serialize, Deserialize)]
 #[display(fmt = "{}", "self.to_json_string()")]
 pub struct StructValidator {
@@ -139,7 +141,7 @@ impl<'a, T: 'a> Extend<&'a Result<T, StructValidator>> for StructValidator {
 #[macro_export]
 macro_rules! deserialize_struct {
 ($struct_name:ident, [$($field_name:ident),*], $explanation:literal) => {
-	paste::item! {
+	struct_validator::paste::item! {
 		impl<'de> serde::Deserialize<'de> for $struct_name {
 			fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
 			where
